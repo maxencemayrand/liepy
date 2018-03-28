@@ -1,34 +1,46 @@
 import random
 import itertools as it
 
-# Data structure for finite directed graphs with weights on nodes and edges.
-# The set of nodes and their weights is implemented by a dictionary. The set of
-# edges is implemented by a dictionary: each key is a 2-tuple of integers,
-# where a tuple (i, j) means there is an edge from node i to node j (in the
-# odering given by the list), and the value of the key is the weight of that
-# edge.
+
 class Graph(object):
+    """
+    Data structure for finite directed graphs with weights on nodes and edges.
+    The set of nodes and their weights is implemented by a dictionary. The set
+    of edges is implemented by a dictionary: each key is a 2-tuple of integers,
+    where a tuple (i, j) means there is an edge from node i to node j (in the
+    odering given by the list), and the value of the key is the weight of that
+    edge.
+    """
     def __init__(self, nodes={}, edges={}):
         self.name  = None   # string: name of the graph.
         self.nodes = nodes  # Dictionary of nodes (values are weights).
         self.edges = edges  # Dictionary of edges (2-tuples with weights).
         self.size  = len(self.nodes) # Size of the graph.
 
-    # Set the dictionary of nodes.
+
     def set_nodes(self, nodes):
+        """
+        Set the dictionary of nodes.
+        """
         self.nodes = nodes
         self.update_size()
 
-    # Set the dictionary of edges.
     def set_edges(self, edges):
+        """
+        Set the dictionary of edges.
+        """
         self.edges = edges
 
-    # Update the size of the graph.
     def update_size(self):
+        """
+        Update the size of the graph.
+        """
         self.size = len(self.nodes)
 
-    # Print the data of the graph on the terminal.
     def info(self):
+        """
+        Print the data of the graph on the terminal.
+        """
         print "=" * 50
         print
         print "Name: %s" % self.name # Name of graph.
@@ -46,8 +58,10 @@ class Graph(object):
         print
         print "=" * 50
 
-    # Relabel the nodes as the integers k, k+1, ...
     def relabel(self, k):
+        """
+        Relabel the nodes as the integers k, k+1, ...
+        """
         # The first step is to construct a bijective map (a dictionary) from
         # the set of nodes to {k, k+1, ...}. We call this map 'ordering'.
         ordering = {}
@@ -60,10 +74,13 @@ class Graph(object):
             in self.edges}
         self.nodes = {ordering[n] : self.nodes[n] for n in self.nodes}
 
-    # Add a graph.
-    # i.e. self becomes the disjoint union of self and dyn.
-    # We relabel all the nodes as integers 0, 1, 2, ...
+
     def add(self, dyn):
+        """
+        Add a graph.
+        i.e. self becomes the disjoint union of self and dyn.
+        We relabel all the nodes as integers 0, 1, 2, ...
+        """
         # We don't want to change the original 'dyn'
         copy = dyn.copy()
 
@@ -86,17 +103,24 @@ class Graph(object):
         # Update the size
         self.update_size()
 
-    # Return a copy of self.
+
     def copy(self):
+        """
+        Return a copy of self.
+        """
         nodes = {n : self.nodes[n] for n in self.nodes}
         edges = {e : self.edges[e] for e in self.edges}
         graph = Graph(nodes, edges)
         graph.name = self.name
         return graph
 
-    # Get the connected components of the graph (forgetting the direction of the
-    # edges.) Returns a list of the components where each element is a Graph.
+
     def components(self):
+        """
+        Get the connected components of the graph (forgetting the direction of
+        the edges.) Returns a list of the components where each element is a
+        Graph.
+        """
         # If self happens to be the empty Graph, return that alone.
         if len(self.nodes) == 0:
             return [self.copy()]
@@ -163,18 +187,23 @@ class Graph(object):
 
         return comp
 
-    # Returns a new graph but with the label of the nodes changed according to
-    # 'p', where 'p' is a map from the set of keys of self.nodes to a new set
-    # of labels.
     def relabel_map(self, p):
+        """
+        Returns a new graph but with the label of the nodes changed according
+        to 'p', where 'p' is a map from the set of keys of self.nodes to a new
+        set of labels.
+        """
         graph = self.copy()
         graph.nodes = {p[n] : graph.nodes[n] for n in graph.nodes}
         graph.edges = {(p[e[0]], p[e[1]]) : graph.edges[e] for e in graph.edges}
         return graph
 
-    # Check if 'self' is equal to the graph g forgetting the direction of
-    # the edges.
+
     def equals(self, g):
+        """
+        Check if 'self' is equal to the graph g forgetting the direction of
+        the edges.
+        """
         if self.nodes != g.nodes:
             return False
         for e in self.edges:
@@ -191,16 +220,20 @@ class Graph(object):
 
         return True
 
-    # Number of edges connected to node 'n'
     def edges_connected(self, n):
+        """
+        Number of edges connected to node 'n'
+        """
         k = 0
         for e in self.edges:
             if e[0] == n or e[1] == n:
                 k += 1
         return k
 
-    # Maximum number of edges connected to a single node.
     def max_n_edges(self):
+        """
+        Maximum number of edges connected to a single node.
+        """
         m = 0
         for n in self.nodes:
             k = self.edges_connected(n)
@@ -209,17 +242,21 @@ class Graph(object):
                 m = k
         return k
 
-    # Total of the node weights
     def sum_nodes(self):
+        """
+        Total of the node weights
+        """
         t = 0
         for n in self.nodes:
             t += self.nodes[n]
         return t
 
-    # Computes the Hasse diagram associated to a partial order. In other words,
-    # it assumes that the directed graph represents a partial order and removes
-    # the edges that can be deduced from transitivity.
     def hasse_reduce(self):
+        """
+        Computes the Hasse diagram associated to a partial order. In other
+        words, it assumes that the directed graph represents a partial order
+        and removes the edges that can be deduced from transitivity.
+        """
         ref_edges = {}
         for a in self.edges:
             do_we_keep_that_edge = True
@@ -233,8 +270,10 @@ class Graph(object):
                 ref_edges[a] = self.edges[a]
         self.edges = ref_edges
 
-    # Outputs a LaTeX version of the Hasse diagram.
     def latex_hasse(self, v):
+        """
+        Outputs a LaTeX version of the Hasse diagram.
+        """
         arr = []
         for n in self.nodes:
             u = random.uniform(0, v)
@@ -261,8 +300,10 @@ class Graph(object):
         print "\\end{tikzpicture}"
         print "$$"
 
-    # Outputs a LaTeX version of the Hasse diagram with nodes as the labels.
     def latex_hasse2(self, v):
+        """
+        Outputs a LaTeX version of the Hasse diagram with nodes as the labels.
+        """
         arr = []
         for n in self.nodes:
             u = random.uniform(0, v)
@@ -293,9 +334,10 @@ class Graph(object):
         print "$$"
 
 
-
-# takes a string "A1 + A1 + A2 + B3" and return "A_1^2A_2B_3"
 def name_simp(s):
+    """
+    Takes a string "A1 + A1 + A2 + B3" and return "A_1^2A_2B_3"
+    """
     if s == "0":
         return s
     arr = s.split(" + ")
@@ -314,8 +356,8 @@ def name_simp(s):
     return toret
 
 
-# Sizes of Weyl groups.
 
+# Sizes of Weyl groups.
 def fac(n):
     if n == 0:
         return 1
@@ -344,14 +386,17 @@ def W_G(n):
 
 
 
-
-# Dynkin diagram object.
 class DynkinDiagram(Graph):
+    """
+    Dynkin diagram object.
+    """
     def __init__(self, nodes={}, edges={}):
         super(DynkinDiagram, self).__init__(nodes, edges)
 
-    # Returns the name of the Dynkin diagram, e.g A3 + F4
     def identify(self):
+        """
+        Returns the name of the Dynkin diagram, e.g A3 + F4
+        """
         # If it already has a name, then let's just return it.
         if self.name != None:
             return self.name
@@ -441,24 +486,30 @@ class DynkinDiagram(Graph):
         self.name = name
         return name
 
-
-    # Normalize the weights of the nodes so that the minimum is 1.
     def normalize(self):
+        """
+        Normalize the weights of the nodes so that the minimum is 1.
+        """
         m = min([self.nodes[n] for n in self.nodes])
         for n in self.nodes:
             self.nodes[n] /= m
 
-    # Returns a copy of self
     def copy(self):
+        """
+        Return a copy of self
+        """
         nodes = {n : self.nodes[n] for n in self.nodes}
         edges = {e : self.edges[e] for e in self.edges}
         dyn = DynkinDiagram(nodes, edges)
         dyn.name = self.name
         return dyn
 
-    # Assumes that self is a simple Dynkin diagram and finds which one.
-    # Returns the name of the diagram, e.g. returns "D4".
+
     def simple_diagram_name(self):
+        """
+        Assumes that self is a simple Dynkin diagram and finds which one.
+        Returns the name of the diagram, e.g. returns "D4".
+        """
         graph = self.copy() # Make a copy, because we will:
         graph.relabel(0)    # relabel the nodes in the same way as the simple DD
         graph.normalize()   # and renormalize it.
@@ -570,8 +621,10 @@ class DynkinDiagram(Graph):
 
         raise ValueError("Not a simple Dynkin diagram")
 
-    # Print on the terminal a LaTeX version of the DynkinDiagram.
     def latex(self, l):
+        """
+        Print on the terminal a LaTeX version of the DynkinDiagram.
+        """
         print "$$"
         print "\\begin{tikzpicture}"
         print "\\tikzset{cir/.style={draw, circle, inner sep=2pt},}"
@@ -598,22 +651,29 @@ class DynkinDiagram(Graph):
         print "\\end{tikzpicture}"
         print "$$"
 
-    # Return a list of the connected components as DynkinDiagram objects.
     def components(self):
+        """
+        Return a list of the connected components as DynkinDiagram objects.
+        """
         comp = super(DynkinDiagram, self).components()
         return [DynkinDiagram(c.nodes, c.edges) for c in comp]
 
-    # Returns the number of edges between node 'm' and node 'n'.
     def n_edges(self, m, n):
+        """
+        Returns the number of edges between node 'm' and node 'n'.
+        """
         if (m, n) in self.edges:
             return self.edges[(m, n)]
         if (n, m) in self.edges:
             return self.edges[(n, m)]
         return 0
 
-    # Return the Cartan matrix as a dictionary which associates an integer
-    # to each pair of nodes.
     def cartan(self):
+        """
+        Return the Cartan matrix as a dictionary which associates an integer
+        # to each pair of nodes.
+        """
+
         A = {} # To return
 
         # Loop over all pair of nodes
@@ -642,14 +702,20 @@ class DynkinDiagram(Graph):
 
         return CartanMatrix(self.nodes, A)
 
-# The simple Dynkin diagrams
+
 class A(DynkinDiagram):
+    """
+    Simple Dynkin diagram of type A
+    """
     def __init__(self, n):
         nodes = {i : 1 for i in range(n)}
         edges = {(i, i+1) : 1 for i in range(n-1)}
         super(A, self).__init__(nodes, edges)
         self.name = "A%d" % n
 class B(DynkinDiagram):
+    """
+    Simple Dynkin diagram of type B
+    """
     def __init__(self, n):
         nodes = {i : 2 for i in range(1, n)}
         nodes[0] = 1
@@ -658,6 +724,9 @@ class B(DynkinDiagram):
         super(B, self).__init__(nodes, edges)
         self.name = "B%d" % n
 class C(DynkinDiagram):
+    """
+    Simple Dynkin diagram of type C
+    """
     def __init__(self, n):
         nodes = {i : 1 for i in range(n-1)}
         nodes[n-1] = 2
@@ -666,6 +735,9 @@ class C(DynkinDiagram):
         super(C, self).__init__(nodes, edges)
         self.name = "C%d" % n
 class D(DynkinDiagram):
+    """
+    Simple Dynkin diagram of type D
+    """
     def __init__(self, n):
         if n >= 4:
             nodes = {i : 1 for i in range(n)}
@@ -679,6 +751,9 @@ class D(DynkinDiagram):
                 "Incorrect value for the Dynkin diagram of type D."
             )
 class E(DynkinDiagram):
+    """
+    Simple Dynkin diagram of type E
+    """
     def __init__(self, n):
         if n == 6:
             nodes = {i : 1 for i in range(6)}
@@ -721,6 +796,9 @@ class E(DynkinDiagram):
                 "Incorrect value for the Dynkin diagram of type E."
             )
 class F(DynkinDiagram):
+    """
+    Simple Dynkin diagram of type F
+    """
     def __init__(self, n):
         if n == 4:
             nodes = {0 : 1, 1 : 1, 2 : 2, 3 : 2}
@@ -736,6 +814,9 @@ class F(DynkinDiagram):
                 "Incorrect value for the Dynkin diagram of type F."
             )
 class G(DynkinDiagram):
+    """
+    Simple Dynkin diagram of type G
+    """
     def __init__(self, n):
         if n == 2:
             nodes = {0 : 1, 1: 3}
@@ -749,8 +830,11 @@ class G(DynkinDiagram):
                 "Incorrect value for the Dynkin diagram of type G."
             )
 
-# Returns a list of all simple Dynkin diagrams of rank 'r' as Graph objects.
+
 def simple_diagrams(r):
+    """
+    Return a list of all simple Dynkin diagrams of rank 'r' as Graph objects.
+    """
     if r == 1:
         dyn1 = A(1)
         ls = [dyn1]
@@ -782,16 +866,20 @@ def simple_diagrams(r):
 
     return ls
 
-# A CartanMatrix is a set of nodes and a dictionary of 2-tuples of nodes.
 class CartanMatrix(object):
+    """
+    A CartanMatrix is a set of nodes and a dictionary of 2-tuples of nodes.
+    """
     def __init__(self, nodes=None, matrix=None):
         # 'set' object
         self.nodes  = nodes
         # 'dictionary' object whose keys are 2-tuples of elements of 'nodes'
         self.matrix = matrix
 
-    # Return a copy of 'self'.
     def copy(self):
+        """
+        Return a copy of 'self'.
+        """
         nd = set([n for n in self.nodes])
         mt = {}
         for m in self.nodes:
@@ -800,8 +888,10 @@ class CartanMatrix(object):
         A = CartanMatrix(nd, mt)
         return A
 
-    # Print on the terminal.
     def display(self):
+        """
+        Print on the terminal.
+        """
         print "+" + "-" * len(self.nodes) * 4 + "---+"
         for m in self.nodes:
             print "|",
