@@ -809,20 +809,3 @@ class CartanMatrix(object):
                 print "%3d" % self.matrix[(m, n)],
             print "  |"
         print "+" + "-" * len(self.nodes) * 4 + "---+"
-
-
-#
-# dyn1 = G(2)
-# dyn2 = A(4)
-# dyn3 = B(3)
-#
-# dyn = DynkinDiagram()
-# dyn.add(dyn1)
-# dyn.add(dyn2)
-# dyn.add(dyn3)
-#
-# dyn.name = None
-# dyn.identify()
-# print dyn.name
-# print dyn.weyl_size()
-# print W_A(4) * W_B(3) * W_G(2)
