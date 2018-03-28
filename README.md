@@ -1,4 +1,4 @@
-# liepy
+# LiePy
 
 A python package for computations in Lie theory.
 
@@ -8,4 +8,4 @@ There are three main classes:
 * DynkinDiagram
 * CartanMatrix
 
-And there are functions to go from one to the other. 
+And there are functions to go from one to the other.
