@@ -42,7 +42,7 @@ class RootSystem(object):
         """
         Get a subset of postive roots.
         """
-        print "Get positive roots."
+        print("Get positive roots.")
         # We use Knapp's method (p.155). That is, first fix any ordering of the
         # set of all roots, say r1, r2, r3, ..., rk. Then, a root 'a' is
         # positive if there exists i such that <a, rj> = 0 for 1 <= j < i and
@@ -64,7 +64,7 @@ class RootSystem(object):
                     break
             if p > 0:
                 self.p_rts.add(r)
-        print "Done with positive roots."
+        print("Done with positive roots.")
 
     def is_simple(self, r):
         """
@@ -80,7 +80,7 @@ class RootSystem(object):
         """
         Get a set of simple roots.
         """
-        print "Get simple roots."
+        print("Get simple roots.")
         # Get a subset of positive roots if not already defined.
         if self.p_rts == None:
             self.get_p_rts()
@@ -93,7 +93,7 @@ class RootSystem(object):
 
         # Update the rank
         self.rank = len(self.s_rts)
-        print "Done with simple roots."
+        print("Done with simple roots.")
 
     def root_reflection(self, a):
         """
@@ -123,7 +123,7 @@ class RootSystem(object):
         """
         Get the Weyl group in 'self.weyl'
         """
-        print "Get Weyl group."
+        print("Get Weyl group.")
         # The methods needs a choice of simple roots, so get one if not
         # already done.
         if self.s_rts == None:
@@ -150,7 +150,7 @@ class RootSystem(object):
                         change = True
                 self.weyl += temp
 
-        print "Done with Weyl group."
+        print("Done with Weyl group.")
         return self.weyl
 
     def init_from_dynkin(self, dyn):
@@ -158,7 +158,7 @@ class RootSystem(object):
         Initiate from a 'DynkinDiagram' object 'dyn'.
         It computes all the variables of __init__.
         """
-        print "Initiate from Dynkin diagram."
+        print("Initiate from Dynkin diagram.")
         # First compute the Cartan matrix
         A = dyn.cartan()
 
@@ -244,7 +244,7 @@ class RootSystem(object):
                 # that everything stays in integers. The product we have
                 # is just a scaler multiple of the one determined by the
                 # Dynkin diagram, so it doesn't matter.)
-        print "Done with initiate from Dynkin diagram."
+        print("Done with initiate from Dynkin diagram.")
 
     def dynkin(self):
         """
@@ -304,7 +304,7 @@ class RootSystem(object):
         Return the set of all symmetric closed subsystems of 'self' as a set of
         'frozenset's of roots in 'self.rts'.
         """
-        print "Compute all subsystems."
+        print("Compute all subsystems.")
         # We can shorten the computation if we have a set of positive roots.
         if self.p_rts == None:
             self.get_p_rts()
@@ -325,7 +325,7 @@ class RootSystem(object):
 
         # At this point, each element of the set 'subsys' consists of a
         # frozenset of rts which is a symmetric closed system.
-        print "Done with subsystems."
+        print("Done with subsystems.")
         return subsys
 
     def root_subsystems(self):
@@ -358,7 +358,7 @@ class RootSystem(object):
         Returns only one representative of each conjugacy class of symmetric
         # closed subsystems.
         """
-        print "Compute isomorphism classes of root systems."
+        print("Compute isomorphism classes of root systems.")
         if self.weyl == None:
             self.get_weyl()
 
@@ -369,11 +369,11 @@ class RootSystem(object):
             orbit = set()
             for w in self.weyl:
                 orbit.add(frozenset([w[r] for r in s]))
-            print "Orbit length : %d" % len(orbit)
+            print("Orbit length : %d" % len(orbit))
             iso_classes.add((s, len(orbit)))
             subsys -= orbit
 
-        print "Done with isomorphism classes of root systems."
+        print("Done with isomorphism classes of root systems.")
         return iso_classes
 
     def root_iso_subsystems(self):
@@ -416,7 +416,7 @@ class RootSystem(object):
         """
         Generate a graph representing the partial order.
         """
-        print "Compute partial order."
+        print("Compute partial order.")
         iso_classes = self.root_iso_subsystems()
         # choose an ordering:
         iso = {}
@@ -444,7 +444,7 @@ class RootSystem(object):
 
         graph = Graph(nodes, edges)
         graph.hasse_reduce()
-        print "Done with partial order."
+        print("Done with partial order.")
         return graph
 
     def HKdim(self):
