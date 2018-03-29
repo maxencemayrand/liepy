@@ -41,22 +41,22 @@ class Graph(object):
         """
         Print the data of the graph on the terminal.
         """
-        print "=" * 50
-        print
-        print "Name: %s" % self.name # Name of graph.
-        print
-        print "%d nodes." % self.size # Number of nodes.
-        print "%d edges." % len(self.edges) # Number of edges.
-        print
-        print "Nodes and weights:" # List of the nodes and their weight.
+        print("=" * 50)
+        print()
+        print("Name: %s" % self.name) # Name of graph.
+        print()
+        print("%d nodes." % self.size) # Number of nodes.
+        print("%d edges." % len(self.edges)) # Number of edges.
+        print()
+        print("Nodes and weights:") # List of the nodes and their weight.
         for n in self.nodes:
-            print "%r : %r" % (n, self.nodes[n])
-        print
-        print "Edges and weights:" # List of the edges and their weight.
+            print("%r : %r" % (n, self.nodes[n]))
+        print()
+        print("Edges and weights:") # List of the edges and their weight.
         for e in self.edges:
-            print "%r --> %r  :  %r" % (e[0], e[1], self.edges[e])
-        print
-        print "=" * 50
+            print("%r --> %r  :  %r" % (e[0], e[1], self.edges[e]))
+        print()
+        print("=" * 50)
 
     def relabel(self, k):
         """
@@ -237,7 +237,7 @@ class Graph(object):
         m = 0
         for n in self.nodes:
             k = self.edges_connected(n)
-            print k
+            print(k)
             if k > m:
                 m = k
         return k
@@ -289,16 +289,16 @@ class Graph(object):
             ls.append((arr[i][0], arr[i][1], k, arr[i][3]))
         ls = ls[::-1]
 
-        print "$$"
-        print "\\begin{tikzpicture}"
-        print "\\tikzset{dot/.style={draw, circle, fill, inner sep=1pt},}"
+        print("$$")
+        print("\\begin{tikzpicture}")
+        print("\\tikzset{dot/.style={draw, circle, fill, inner sep=1pt},}")
         for i in ls:
-            print "\\node[dot] (%d) at \t(%.2f, %d) {};" % (i[0], i[1], i[2])
-            print "\\node[left] at \t\t(%.2f, %d) {$%s$};" % (i[1], i[2], i[3])
+            print("\\node[dot] (%d) at \t(%.2f, %d) {};" % (i[0], i[1], i[2]))
+            print("\\node[left] at \t\t(%.2f, %d) {$%s$};" % (i[1], i[2], i[3]))
         for e in self.edges:
-            print "\\draw (%d) -- (%d);" % (e[0], e[1])
-        print "\\end{tikzpicture}"
-        print "$$"
+            print("\\draw (%d) -- (%d);" % (e[0], e[1]))
+        print("\\end{tikzpicture}")
+        print("$$")
 
     def latex_hasse2(self, v):
         """
@@ -319,19 +319,21 @@ class Graph(object):
             ls.append((arr[i][0], arr[i][1], k, arr[i][4], arr[i][3]))
         ls = ls[::-1]
 
-        print "$$"
-        print "\\begin{tikzpicture}\\tiny"
+        print("$$")
+        print("\\begin{tikzpicture}\\tiny")
         for i in ls:
             if i[4] == '0':
-                print "\\node (%d) at (%.2f, %d) {$%d$};" % (i[0], i[1], i[2], i[3])
+                print("\\node (%d) at (%.2f, %d) {$%d$};" %
+                        (i[0], i[1], i[2], i[3]))
             elif i[3] > 1:
-                print "\\node (%d) at (%.2f, %d) {$%d%s$};" % i
+                print("\\node (%d) at (%.2f, %d) {$%d%s$};" % i)
             else:
-                print "\\node (%d) at (%.2f, %d) {$%s$};" % (i[0], i[1], i[2], i[4])
+                print("\\node (%d) at (%.2f, %d) {$%s$};" %
+                        (i[0], i[1], i[2], i[4]))
         for e in self.edges:
-            print "\\draw (%d) -- (%d);" % (e[0], e[1])
-        print "\\end{tikzpicture}"
-        print "$$"
+            print("\\draw (%d) -- (%d);" % (e[0], e[1]))
+        print("\\end{tikzpicture}")
+        print("$$")
 
 
 def name_simp(s):
@@ -625,31 +627,31 @@ class DynkinDiagram(Graph):
         """
         Print on the terminal a LaTeX version of the DynkinDiagram.
         """
-        print "$$"
-        print "\\begin{tikzpicture}"
-        print "\\tikzset{cir/.style={draw, circle, inner sep=2pt},}"
-        print "\\tikzset{dot/.style={draw, circle, fill, inner sep=2pt},}"
+        print("$$")
+        print("\\begin{tikzpicture}")
+        print("\\tikzset{cir/.style={draw, circle, inner sep=2pt},}")
+        print("\\tikzset{dot/.style={draw, circle, fill, inner sep=2pt},}")
 
         m = min(self.nodes[n] for n in self.nodes)
         for n in self.nodes:
             if self.nodes[n] > m:
-                print "\\node[dot] (%r) at (%f, %f) {};" % (n,
-                    random.uniform(0, l), random.uniform(0, l))
+                print("\\node[dot] (%r) at (%f, %f) {};" % (n,
+                    random.uniform(0, l), random.uniform(0, l)))
             else:
-                print "\\node[cir] (%r) at (%f, %f) {};" % (n,
-                    random.uniform(0, l), random.uniform(0, l))
+                print("\\node[cir] (%r) at (%f, %f) {};" % (n,
+                    random.uniform(0, l), random.uniform(0, l)))
         for e in self.edges:
             if self.edges[e] == 1:
-                print "\\draw (%r) -- (%r);" % (e[0], e[1])
+                print("\\draw (%r) -- (%r);" % (e[0], e[1]))
             if self.edges[e] == 2:
-                print "\\draw[double, double distance=2pt] (%r) -- (%r);" % (
-                    e[0], e[1])
+                print("\\draw[double, double distance=2pt] (%r) -- (%r);" % (
+                    e[0], e[1]))
             if self.edges[e] == 3:
-                print "\\draw[double, double distance=2pt] (%r) -- (%r);" % (
-                    e[0], e[1])
-                print "\\draw (%r) -- (%r);" % (e[0], e[1])
-        print "\\end{tikzpicture}"
-        print "$$"
+                print("\\draw[double, double distance=2pt] (%r) -- (%r);" % (
+                    e[0], e[1]))
+                print("\\draw (%r) -- (%r);" % (e[0], e[1]))
+        print("\\end{tikzpicture}")
+        print("$$")
 
     def components(self):
         """
@@ -892,10 +894,10 @@ class CartanMatrix(object):
         """
         Print on the terminal.
         """
-        print "+" + "-" * len(self.nodes) * 4 + "---+"
+        print("+" + "-" * len(self.nodes) * 4 + "---+")
         for m in self.nodes:
-            print "|",
+            print("|",)
             for n in self.nodes:
-                print "%3d" % self.matrix[(m, n)],
-            print "  |"
-        print "+" + "-" * len(self.nodes) * 4 + "---+"
+                print("%3d" % self.matrix[(m, n)],)
+            print("  |")
+        print("+" + "-" * len(self.nodes) * 4 + "---+")
