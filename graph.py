@@ -894,10 +894,10 @@ class CartanMatrix(object):
         """
         Print on the terminal.
         """
-        print("+" + "-" * len(self.nodes) * 4 + "---+")
+        print("+" + "-" * len(self.nodes) * 3 + "--+")
         for m in self.nodes:
-            print("|",)
+            print("|", end='')
             for n in self.nodes:
-                print("%3d" % self.matrix[(m, n)],)
+                print("%3d" % self.matrix[(m, n)], end='')
             print("  |")
-        print("+" + "-" * len(self.nodes) * 4 + "---+")
+        print("+" + "-" * len(self.nodes) * 3 + "--+")
