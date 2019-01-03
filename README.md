@@ -14,7 +14,7 @@ This was originally created to do computations for [this paper](https://doi.org/
 
 ## Example
 
-For example, the following snippet prints the LaTeX code for the Hasse diagram of the poset of root subsystems of the symplectic Lie algebra $\mathfrak{sp}(8, \mathbb{C})$.
+For example, the following snippet prints the LaTeX code for the Hasse diagram of the poset of root subsystems of the symplectic Lie algebra sp(8, C) (i.e. type C4)
 ```python
 # Create a Dynkin diagram object for sl(8, C)
 dyn = C(4)
@@ -30,7 +30,7 @@ Which gives
 
 ![poset1](./examples/example1.jpg)
 
-Similarly, we can do this for the exceptional Lie algebra $F_4$, which gives:
+Similarly, we can do this for the exceptional Lie algebra F4, which gives:
 
 ![poset2](./examples/example2.jpg)
 
