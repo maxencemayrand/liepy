@@ -3,3 +3,4 @@ __pycache__/
 examples/*.log
 examples/*.out
 examples/*.gz
+examples/*.aux
