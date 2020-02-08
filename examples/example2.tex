@@ -1,0 +1,147 @@
+\documentclass{article}
+
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage{tikz-cd}
+\usepackage[paperwidth=6in,paperheight=6in]{geometry}
+
+\newcommand{\N}{\mathbb{N}} 
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}} 
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\Lie}{\mathrm{Lie}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\q}{\mathfrak{q}}
+\newcommand{\h}{\mathfrak{h}}
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\fk}{\mathfrak{k}}
+\newcommand{\e}{\varepsilon}
+\newcommand{\sll}[1]{\mkern-4mu\mathbin{/\mkern-5mu/}_{\mkern-4mu{#1}}}
+\newcommand{\slll}[1]{\mkern-4mu\mathbin{/\mkern-5mu/\mkern-5mu/}_{\mkern-4mu{#1}}}
+\newcommand{\ft}{\mathfrak{t}}
+\newcommand{\s}{\subseteq}
+\newcommand{\ip}[1]{\langle #1\rangle}
+\newcommand{\too}{\longrightarrow}
+\newcommand{\mto}{\mapsto}
+\newcommand{\mtoo}{\longmapsto}
+\newcommand{\hooklongrightarrow}{\lhook\joinrel\longrightarrow}
+\newcommand{\reg}{^{\mathrm{reg}}}
+\newcommand{\st}{^{\mathrm{s}}}
+\newcommand{\ps}{^{\mathrm{ps}}}
+\newcommand{\ass}{^{\textrm{a-ss}}}
+\newcommand{\aps}{^{\textrm{a-ps}}}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Hom}{Hom}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{figure}{section}
+\numberwithin{equation}{section}
+
+\newcommand\blfootnote[1]{
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}
+  \addtocounter{footnote}{-1}
+  \endgroup
+}
+\pagenumbering{gobble}
+
+\begin{document}
+\topskip0pt
+
+\begin{center}
+\begin{tikzpicture}[xscale=1.2, yscale=0.7, baseline=(current bounding box.center)]\tiny
+\node (14) at (4.5, 15) {$F_4$};
+\node (19) at (1.75, 14) {$9B_4$};
+\node (21) at (0.5, 13) {$6D_4$};
+\node (16) at (4.5, 12) {$144A_1C_3$};
+\node (12) at (1.5, 10.75) {$288B_3$};
+\node (1) at (4.5, 10.75) {$288C_3$};
+\node (4) at (3.3, 10) {$288A_1A_3$};
+\node (17) at (0.7, 9) {$576A_3$};
+\node (10) at (3.25, 8) {$648A_1^2B_2$};
+\node (9) at (6.25, 8) {$512A_2^2$};
+\node (11) at (3.75, 7) {$2592A_1B_2$};
+\node (20) at (3.4, 6) {$2592B_2$};
+\node (5) at (5, 5) {$4608A_1A_2$};
+\node (3) at (6.6, 5) {$4608A_1A_2$};
+\node (22) at (6.25, 4) {$3072A_2$};
+\node (18) at (2.9, 4) {$3072A_2$};
+\node (13) at (-0.25, 4) {$216A_1^4$};
+\node (15) at (0, 3) {$1728A_1^3$};
+\node (0) at (1, 3) {$5184A_1^3$};
+\node (8) at (4, 2) {$20736A_1^2$};
+\node (6) at (0.75, 2) {$5184A_1^2$};
+\node (23) at (6, 1) {$6912A_1$};
+\node (7) at (2, 1) {$6912A_1$};
+\node (2) at (4, 0) {$1152$};
+\draw (5) -- (9);
+\draw (15) -- (13);
+\draw (23) -- (22);
+\draw (8) -- (0);
+\draw (23) -- (8);
+\draw (0) -- (10);
+\draw (16) -- (14);
+\draw (6) -- (17);
+\draw (8) -- (5);
+\draw (13) -- (21);
+\draw (11) -- (10);
+\draw (20) -- (12);
+\draw (20) -- (11);
+\draw (4) -- (19);
+\draw (17) -- (21);
+\draw (1) -- (16);
+\draw (19) -- (14);
+\draw (2) -- (23);
+\draw (15) -- (11);
+\draw (11) -- (1);
+\draw (0) -- (4);
+\draw (3) -- (16);
+\draw (6) -- (15);
+\draw (21) -- (19);
+\draw (22) -- (3);
+\draw (5) -- (4);
+\draw (9) -- (14);
+\draw (8) -- (11);
+\draw (10) -- (19);
+\draw (6) -- (0);
+\draw (7) -- (18);
+\draw (0) -- (12);
+\draw (23) -- (20);
+\draw (18) -- (5);
+\draw (3) -- (9);
+\draw (18) -- (17);
+\draw (13) -- (10);
+\draw (17) -- (4);
+\draw (2) -- (7);
+\draw (8) -- (3);
+\draw (10) -- (16);
+\draw (12) -- (19);
+\draw (6) -- (20);
+\draw (17) -- (12);
+\draw (22) -- (1);
+\draw (7) -- (8);
+\draw (7) -- (6);
+\end{tikzpicture}
+\end{center}
+
+
+\end{document}
+
