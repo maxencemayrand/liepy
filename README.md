@@ -12,17 +12,21 @@ And there are functions to go from one to the other.
 
 This was originally created to do computations for [this paper](https://doi.org/10.1007/s00031-018-9501-x) (see Section 6). [[arxiv link](https://arxiv.org/abs/1709.09126)]
 
-## Example
+## Examples
 
 For example, the following snippet prints the LaTeX code for the Hasse diagram of the poset of root subsystems of the symplectic Lie algebra sp(8, C) (i.e. type C4)
 ```python
-# Create a Dynkin diagram object for sl(8, C)
-dyn = C(4)
+import liepy
+
+# Create Dynkin diagram object for the Lie algebra sp(8, C)
+dynkin = liepy.DynkinDiagram('C4')
+
 # Create the corresponding root system
-roots = RootSystem()
-roots.init_from_dynkin(dyn)
+rootsystem = liepy.RootSystem(dynkin)
+
 # Compute the poset of root subsystems.
-poset = root.poset_iso_subsystems()
+poset = rootsystem.poset_subsystems()
+
 # Output the LaTeX code
 poset.latex_hasse()
 ```

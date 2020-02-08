@@ -1,7 +1,6 @@
-from graph import *
-from math import *
-import itertools as it
-
+from .dynkindiagram import DynkinDiagram
+from .graph import Graph
+import itertools
 
 class RootSystem(object):
     """
@@ -12,7 +11,7 @@ class RootSystem(object):
     and their inner-product as a dictionary whose keys are pair of roots and
     whose values are integers.
     """
-    def __init__(self, rts=None, prd=None):
+    def __init__(self, dynkin=None, rts=None, prd=None):
 
         # The two main variables:
 
@@ -37,6 +36,9 @@ class RootSystem(object):
         # roots (i.e. 'self.rts') and whose values are also roots, thus giving
         # a map from the set of roots to itself.
         self.weyl = None
+
+        if dynkin:
+            self.init_from_dynkin(dynkin)
 
     def get_p_rts(self):
         """
@@ -158,7 +160,6 @@ class RootSystem(object):
         Initiate from a 'DynkinDiagram' object 'dyn'.
         It computes all the variables of __init__.
         """
-        print("Initiate from Dynkin diagram.")
         # First compute the Cartan matrix
         A = dyn.cartan()
 
@@ -244,7 +245,6 @@ class RootSystem(object):
                 # that everything stays in integers. The product we have
                 # is just a scaler multiple of the one determined by the
                 # Dynkin diagram, so it doesn't matter.)
-        print("Done with initiate from Dynkin diagram.")
 
     def dynkin(self):
         """
@@ -273,7 +273,7 @@ class RootSystem(object):
                 if ned != 0:
                     ed[(i, j)] = ned
 
-        dyn = DynkinDiagram(nd, ed)
+        dyn = DynkinDiagram(nodes=nd, edges=ed)
         return dyn
 
     def dim(self):
@@ -315,7 +315,7 @@ class RootSystem(object):
         # Loop over all possible subset of the set of positive roots and check
         # if it defines a closed subsystem.
         for k in range(1, len(self.p_rts) + 1):
-            for Psi in [frozenset(c) for c in it.combinations(self.p_rts, k)]:
+            for Psi in [frozenset(c) for c in itertools.combinations(self.p_rts, k)]:
                 if self.is_subsystem(Psi):
                     # Add the negative roots.
                     Psi_all = set(Psi)
@@ -347,7 +347,7 @@ class RootSystem(object):
                 for b in rts:
                     prd[(a, b)] = self.prd[(a, b)]
             # Create 'RootSystem' object corresponding to this subsystem
-            rootsys = RootSystem(rts, prd)
+            rootsys = RootSystem(rts=rts, prd=prd)
             rootsubsys.add(rootsys)
 
         # Return the set of RootSystem's.
@@ -393,7 +393,7 @@ class RootSystem(object):
                 for b in rts:
                     prd[(a, b)] = self.prd[(a, b)]
             # Create 'RootSystem' object corresponding to this subsystem
-            rootsys = RootSystem(rts, prd)
+            rootsys = RootSystem(rts=rts, prd=prd)
             rootsubsys.add((rootsys, s[1]))
 
         # Return the set of RootSystem's.
@@ -412,7 +412,7 @@ class RootSystem(object):
                 return True
         return False
 
-    def poset_iso_subsystems(self):
+    def poset_subsystems(self):
         """
         Generate a graph representing the partial order.
         """
@@ -483,24 +483,3 @@ def mul_tuple(c, t):
     """
     return tuple(c * t[i] for i in range(len(t)))
 
-def dim_A(n):
-    return n * (n + 2)
-def dim_B(n):
-    return n * (2 * n + 1)
-def dim_C(n):
-    return n * (2 * n + 1)
-def dim_D(n):
-    return n * (2 * n - 1)
-def dim_E(n):
-    if n == 6:
-        return 78
-    if n == 7:
-        return 133
-    if n == 8:
-        return 248
-def dim_F(n):
-    if n == 4:
-        return 52
-def dim_G(n):
-    if n == 2:
-        return 14
